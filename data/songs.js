@@ -29,4 +29,4 @@ const songs = [
     { id: 28, title: "Percussionismo", image: "../split.jpeg", audio: "../audios/bongist_Master.wav" , artistId: 1, albumId: 3, duration: "01:58"},
   ];
 
-  module.export = songs
+  module.exports = songs

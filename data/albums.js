@@ -4,4 +4,4 @@ const albums = [
     { id: 3, title: "House fever", artistId: 1, year: 2024, image: "../mixdaily.jpeg", songIds: [9, 11, 4, 12, 14, 16, 20, 23, 26] },
 ]
 
-module.export = albums
+module.exports = albums
