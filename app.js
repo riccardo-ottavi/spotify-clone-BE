@@ -10,6 +10,12 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5174',
+  methods: ['GET','POST','PATCH','DELETE'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.use('/songs', songRouter);
@@ -20,7 +26,6 @@ app.use('/playlists', playlistRouter);
 
 app.use('/audio', express.static('audio'));
 app.use('/images', express.static('images'));
-
 
 
 app.get("/", (req, res) => {
