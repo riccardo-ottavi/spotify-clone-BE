@@ -100,13 +100,20 @@ function addSong(req, res) {
     const playlistId = Number(req.params.id);
     const { song_id } = req.body;
 
-    if (isNaN(playlistId) || !song_id) return res.status(400).json({ message: 'Invalid playlist ID or song ID' });
+    if (isNaN(playlistId) || !song_id) {
+        return res.status(400).json({ message: "playlist_id o song_id mancante" });
+    }
 
-    const sql = 'INSERT INTO playlist_songs (playlist_id, song_id) VALUES (?, ?)';
+    const sql = `INSERT INTO playlist_songs (playlist_id, song_id) VALUES (?, ?)`;
     db.query(sql, [playlistId, song_id], (err, result) => {
-        if (err) return res.status(500).json(err);
-        res.status(201).json({ message: 'Song added to playlist', id: result.insertId });
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Errore nell'aggiunta della canzone" });
+        }
+        res.status(201).json({ playlistId, song_id });
     });
 }
+
+
 
 module.exports = { index, show, create, update, destroy, getSongs, addSong };

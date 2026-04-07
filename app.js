@@ -5,11 +5,12 @@ const songRouter = require('./routers/songRouter');
 const artistRouter = require('./routers/artistRouter');
 const albumRouter = require('./routers/albumRouter');
 const playlistRouter = require('./routers/playlistRouter');
+const uploadRouter = require('./routers/uploadRouter');
+
 
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
 app.use(cors({
   origin: 'http://localhost:5174',
   methods: ['GET','POST','PATCH','DELETE'],
@@ -20,9 +21,9 @@ app.use(express.json());
 
 app.use('/songs', songRouter);
 app.use('/artists', artistRouter);
-app.use('/songs', songRouter);
 app.use('/albums', albumRouter);
 app.use('/playlists', playlistRouter);
+app.use('/upload', uploadRouter);  
 
 app.use('/audio', express.static('audio'));
 app.use('/images', express.static('images'));
