@@ -20,6 +20,22 @@ function show(req, res) {
     });
 }
 
+function removeSong(req, res) {
+    const playlistId = Number(req.params.id);
+    const songId = Number(req.params.songId);
+
+    if (isNaN(playlistId) || isNaN(songId)) {
+        return res.status(400).json({ message: "playlist_id o song_id non valido" });
+    }
+
+    const sql = 'DELETE FROM playlist_songs WHERE playlist_id = ? AND song_id = ?';
+    db.query(sql, [playlistId, songId], (err, result) => {
+        if (err) return res.status(500).json({ message: "Errore nella rimozione della canzone" });
+        if (result.affectedRows === 0) return res.status(404).json({ message: "Canzone non trovata nella playlist" });
+        res.status(204).send(); // successo senza contenuto
+    });
+}
+
 // Crea una nuova playlist
 function create(req, res) {
     const { name, image, notes } = req.body;
@@ -116,4 +132,4 @@ function addSong(req, res) {
 
 
 
-module.exports = { index, show, create, update, destroy, getSongs, addSong };
+module.exports = { index, show, create, update, destroy, getSongs, addSong, removeSong };

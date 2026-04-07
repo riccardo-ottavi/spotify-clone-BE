@@ -10,5 +10,6 @@ router.delete('/:id', controller.destroy);
 router.get('/:id/songs', controller.getSongs);
 router.post('/:id/songs', controller.addSong); 
 router.patch('/:id', controller.update);
+router.delete('/:id/songs/:songId', controller.removeSong);
 
 module.exports = router;
