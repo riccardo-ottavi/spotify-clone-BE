@@ -85,12 +85,16 @@ function update(req, res) {
 // Elimina una playlist
 function destroy(req, res) {
     const id = Number(req.params.id);
-    if (isNaN(id)) return res.status(400).json({ message: 'Invalid playlist ID' });
 
-    db.query('DELETE FROM playlists WHERE id = ?', [id], (err, result) => {
+    db.query('DELETE FROM playlist_songs WHERE playlist_id = ?', [id], (err) => {
         if (err) return res.status(500).json(err);
-        if (result.affectedRows === 0) return res.status(404).json({ message: "Playlist not found" });
-        res.status(204).send(); // eliminazione senza contenuto
+
+        db.query('DELETE FROM playlists WHERE id = ?', [id], (err, result) => {
+            if (err) return res.status(500).json(err);
+            if (result.affectedRows === 0) return res.status(404).json({ message: "Playlist not found" });
+
+            res.status(204).send();
+        });
     });
 }
 
