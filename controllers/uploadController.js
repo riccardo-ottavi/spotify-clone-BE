@@ -14,7 +14,7 @@ const upload = multer({ storage });
 
 const uploadImage = (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
-  const imageUrl = `http://localhost:3000/images/${req.file.filename}`;
+  const imageUrl = `${process.env.API_URL}/images/${req.file.filename}`;
   res.json({ url: imageUrl });
 };
 

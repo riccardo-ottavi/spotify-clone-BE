@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+require('dotenv').config();
 const songRouter = require('./routers/songRouter');
 const artistRouter = require('./routers/artistRouter');
 const albumRouter = require('./routers/albumRouter');
