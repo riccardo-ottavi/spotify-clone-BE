@@ -32,9 +32,13 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/images', express.static(path.join(__dirname, 'dist', 'images')));
 app.use('/audio', express.static(path.join(__dirname, 'dist', 'audio')));
 
-// Serve index.html per ogni percorso non gestito
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// Fallback solo per richieste HTML (evita di intercettare JS/CSS)
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/songs') && !req.path.startsWith('/artists') && !req.path.startsWith('/albums') && !req.path.startsWith('/playlists') && !req.path.startsWith('/upload') && !req.path.match(/\.\w+$/)) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  } else {
+    next();
+  }
 });
 
 app.listen(PORT, () => {
